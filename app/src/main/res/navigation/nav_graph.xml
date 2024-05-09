@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="org.freedu.notebookmvvm.HomeFragment"
+        android:name="org.freedu.notebookmvvm.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
-        android:name="org.freedu.notebookmvvm.NewNoteFragment"
+        android:name="org.freedu.notebookmvvm.fragment.NewNoteFragment"
         android:label="fragment_new_note"
         tools:layout="@layout/fragment_new_note" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateNoteFragment"
-        android:name="org.freedu.notebookmvvm.UpdateNoteFragment"
+        android:name="org.freedu.notebookmvvm.fragment.UpdateNoteFragment"
         android:label="fragment_update_note"
         tools:layout="@layout/fragment_update_note" >
         <action
