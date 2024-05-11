@@ -34,5 +34,9 @@
         <action
             android:id="@+id/action_updateNoteFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="note"
+            app:argType="org.freedu.notebookmvvm.model.Note"
+            app:nullable="true"/>
     </fragment>
 </navigation>
