@@ -62,7 +62,7 @@
                 android:layout_marginBottom="12dp"
                 android:backgroundTint="#03A9F4"
                 android:clickable="true"
-                android:src="@drawable/add"
+                android:src="@drawable/done"
                 app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
