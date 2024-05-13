@@ -54,7 +54,7 @@ class NewNoteFragment : Fragment() {
         val noteBody = binding.noteBodyEt.text.toString().trim()
 
         if (noteTitle.isNotEmpty() && noteBody.isNotEmpty()) {
-            val note = Note(0, noteTitle, noteBody)
+            val note = Note(noteTitle =  noteTitle, noteBody = noteBody)
             noteViewModel.addNote(note)
             requireActivity().onBackPressed()
         } else {

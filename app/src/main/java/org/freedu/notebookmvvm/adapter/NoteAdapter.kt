@@ -3,16 +3,23 @@ package org.freedu.notebookmvvm.adapter
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import org.freedu.notebookmvvm.MainActivity
+import org.freedu.notebookmvvm.Repository.NoteRepository
+import org.freedu.notebookmvvm.database.NoteDatabase
 import org.freedu.notebookmvvm.databinding.NoteLayoutBinding
 import org.freedu.notebookmvvm.fragment.HomeFragmentDirections
 import org.freedu.notebookmvvm.model.Note
+import org.freedu.notebookmvvm.viewmodel.NoteViewModel
+import org.freedu.notebookmvvm.viewmodel.NoteViewModelFactory
 import java.util.Random
 
-class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(private val onDeleteNoteListener: OnDeleteNoteListener) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     class NoteViewHolder(val itemBinding: NoteLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root)
 
@@ -59,5 +66,14 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
             val direction = HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentNote)
             it.findNavController().navigate(direction)
         }
+        holder.itemView.setOnLongClickListener {
+            val currentNote = differ.currentList[position]
+            onDeleteNoteListener.showDeleteConfirmationDialog(currentNote)
+            true // Returning true to indicate that the long click event is consumed
+        }
+
+    }
+    interface OnDeleteNoteListener {
+        fun showDeleteConfirmationDialog(note: Note)
     }
 }

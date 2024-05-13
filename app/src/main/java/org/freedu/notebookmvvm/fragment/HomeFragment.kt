@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -14,10 +15,11 @@ import org.freedu.notebookmvvm.Repository.NoteRepository
 import org.freedu.notebookmvvm.adapter.NoteAdapter
 import org.freedu.notebookmvvm.database.NoteDatabase
 import org.freedu.notebookmvvm.databinding.FragmentHomeBinding
+import org.freedu.notebookmvvm.model.Note
 import org.freedu.notebookmvvm.viewmodel.NoteViewModel
 import org.freedu.notebookmvvm.viewmodel.NoteViewModelFactory
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), NoteAdapter.OnDeleteNoteListener {
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var noteAdapter: NoteAdapter
     private lateinit var noteRepository: NoteRepository
@@ -31,7 +33,7 @@ class HomeFragment : Fragment() {
         val factory = NoteViewModelFactory(requireActivity().application, repository)
         noteViewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
 
-        val adapter = NoteAdapter()
+        val adapter = NoteAdapter(this)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
@@ -56,6 +58,21 @@ class HomeFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun showDeleteConfirmationDialog(note: Note) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete Note")
+        builder.setMessage("Are you sure you want to delete this note?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            // User confirmed deletion, call delete function
+            noteViewModel.deleteNote(note)
+        }
+        builder.setNegativeButton("No") { _, _ ->
+            // User canceled deletion
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
 
